@@ -13,6 +13,7 @@ using MyBlog.Models;
 using MyBlog.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using MyBlog.Authorization.Handlers;
 
 namespace MyBlog
 {
@@ -47,14 +48,10 @@ namespace MyBlog
                                 .Build();
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
+            
 
-            //services.AddAuthorization(options =>
-            //{
-
-            //});
-
-            //services.AddScoped<IAuthorizationHandler, HeadAdminHandler>();
-            //services.AddScoped<IAuthorizationHandler, PostAdminHandler>();
+            services.AddScoped<IAuthorizationHandler, HeadAdminHandler>();
+            services.AddScoped<IAuthorizationHandler, PostAdminHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
