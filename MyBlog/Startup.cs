@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using MyBlog.Data;
 using MyBlog.Models;
 using MyBlog.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace MyBlog
 {
@@ -36,7 +38,23 @@ namespace MyBlog
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
-            services.AddMvc();
+            //services.AddMvc();
+
+            services.AddMvc(config =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                                .RequireAuthenticatedUser()
+                                .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            });
+
+            //services.AddAuthorization(options =>
+            //{
+
+            //});
+
+            //services.AddScoped<IAuthorizationHandler, HeadAdminHandler>();
+            //services.AddScoped<IAuthorizationHandler, PostAdminHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
