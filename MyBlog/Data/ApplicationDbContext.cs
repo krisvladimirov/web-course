@@ -24,5 +24,6 @@ namespace MyBlog.Data
         }
 
         public DbSet<MyBlog.Models.Post> Post { get; set; }
+        public DbSet<MyBlog.Models.Comment> Comments { get; set; }
     }
 }

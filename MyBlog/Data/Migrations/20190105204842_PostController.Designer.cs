@@ -11,9 +11,10 @@ using System;
 namespace MyBlog.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190105204842_PostController")]
+    partial class PostController
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -179,29 +180,6 @@ namespace MyBlog.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("MyBlog.Models.Comment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("BelongingPostId");
-
-                    b.Property<string>("CommentValue")
-                        .IsRequired();
-
-                    b.Property<DateTime>("CreationDate");
-
-                    b.Property<string>("OwnerId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BelongingPostId");
-
-                    b.HasIndex("OwnerId");
-
-                    b.ToTable("Comments");
-                });
-
             modelBuilder.Entity("MyBlog.Models.Post", b =>
                 {
                     b.Property<int>("Id")
@@ -267,17 +245,6 @@ namespace MyBlog.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("MyBlog.Models.Comment", b =>
-                {
-                    b.HasOne("MyBlog.Models.Post", "BelongingPost")
-                        .WithMany()
-                        .HasForeignKey("BelongingPostId");
-
-                    b.HasOne("MyBlog.Models.ApplicationUser", "Owner")
-                        .WithMany()
-                        .HasForeignKey("OwnerId");
                 });
 
             modelBuilder.Entity("MyBlog.Models.Post", b =>
