@@ -1,4 +1,4 @@
-﻿@model MyBlog.Models.Post
+﻿@model MyBlog.Models.PostViewModels.PostDetailsViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -11,20 +11,26 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.Post.Title)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Title)
+            @Html.DisplayFor(model => model.Post.Title)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.PostValue)
+            @Html.DisplayNameFor(model => model.Post.PostValue)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.PostValue)
+            @Html.DisplayFor(model => model.Post.PostValue)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Post.Owner.UserName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Post.Owner.UserName)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.Post.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
