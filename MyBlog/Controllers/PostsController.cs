@@ -71,23 +71,25 @@ namespace MyBlog.Controllers
             {
 
                 ApplicationUser user = await GetCurrentUserAsync();
-                Comment comment = new Comment
-                {
-                    CommentValue = viewModel.CommentValue,
-                    Owner = user,
-                    CreationDate = DateTime.Now
-                    //String.format"{0:g}"
-
-                };
-
                 Post post = await _context.Post
                     .Include(p => p.Owner)
                     .FirstOrDefaultAsync(m => m.Id == viewModel.PostId);
+
                 if (post == null)
                 {
                     return NotFound();
                 }
-                comment.BelongingPost = post;
+
+                Comment comment = new Comment
+                {
+                    CommentValue = viewModel.CommentValue,
+                    Owner = user,
+                    CreationDate = DateTime.Now,
+                    BelongingPost = post
+                    //String.format"{0:g}"
+
+                };
+                
                 _context.Comments.Add(comment);
                 await _context.SaveChangesAsync();
 
