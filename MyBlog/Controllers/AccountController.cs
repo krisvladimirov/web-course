@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using MyBlog.Models;
 using MyBlog.Models.AccountViewModels;
 using MyBlog.Services;
+using MyBlog.Data.Seeds;
 
 namespace MyBlog.Controllers
 {
@@ -225,6 +226,9 @@ namespace MyBlog.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    //Adding a user to the default "user" role with basic rights
+                    await _userManager.AddToRoleAsync(user, Constants.User);
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
