@@ -134,7 +134,9 @@ namespace MyBlog.Controllers
                 return NotFound();
             }
 
-            Post post = await _context.Post.SingleOrDefaultAsync(m => m.Id == id);
+            Post post = await _context.Post
+                .Include(p => p.Owner)
+                .SingleOrDefaultAsync(m => m.Id == id);
             if (post == null)
             {
                 return NotFound();
@@ -193,6 +195,7 @@ namespace MyBlog.Controllers
             }
 
             Post post = await _context.Post
+                .Include(p => p.Owner)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (post == null)
             {
