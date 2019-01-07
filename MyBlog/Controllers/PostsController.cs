@@ -218,7 +218,6 @@ namespace MyBlog.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        // POST: Posts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Constants.HeadAdminOrPostAdmin)]

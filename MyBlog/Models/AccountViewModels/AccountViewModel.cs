@@ -14,8 +14,6 @@ namespace MyBlog.Models.AccountViewModels
         public string Email { get; set; }
 
         public IList<string> Roles { get; set; }
-
-        //public List<AccountViewModel> UsersWithRole { get; set; }
     }
 
     public class UsersAndRolesViewModel

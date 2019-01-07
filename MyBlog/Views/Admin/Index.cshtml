@@ -18,25 +18,28 @@
                     <td><b>Roles</b></td>
                 </tr>
             </thead>
-            
+
             @foreach (var item in Model.UserAndRole)
             {
                 <tr>
                     <td>@item.UserName</td>
                     <td>
-                        @foreach(var role in item.Roles)
+                        @foreach (var role in item.Roles)
                         {
                             @role
                         }
                     </td>
+                    <td><a asp-action="Delete" asp-route-id="@item.UserId">Delete User</a></td>
+                    <td><a asp-action="Edit" asp-route-id="">Edit</a></td>
+                    <td><a></a>User details</td>
                 </tr>
             }
         </table>
     </div>
-
-    @*<div class="panel-footer">
-        <p class="box-title"><b>Total Users till @String.Format("{0 : dddd, MMMM d, yyyy}", DateTime.Now)  : </b><span class="label label-primary">@Model.UserAndRole.Count()</span></p>
-    </div>*@
+    @*675bef42-19dc-47b1-8ba9-94aa9ea6566f*@
+    <div class="panel-footer">
+        <p class="box-title"><b>Total Users till @String.Format("{0 : MMMM d, yyyy}", DateTime.Now)  : </b><span class="label label-primary">@Model.UserAndRole.Count()</span></p>
+    </div>
 </div>
 
 
