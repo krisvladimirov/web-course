@@ -32,14 +32,22 @@ namespace MyBlog.Controllers
             _authorizationService = authorizationService;
         }
 
+        /// <summary>
+        /// Where all posts can be seen
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize(Roles = Constants.RegisteredUsers)]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Post.Include(p => p.Owner).ToListAsync());
         }
-
-        // GET: Posts/Details/5
+        
+        /// <summary>
+        /// Provides a detailed view of the contents of a post including its comments
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize(Roles = Constants.RegisteredUsers)]
         public async Task<IActionResult> Details(int? id)
@@ -62,6 +70,11 @@ namespace MyBlog.Controllers
             return View(viewModel);
         }
 
+        /// <summary>
+        /// Adds a comment to a unique post
+        /// </summary>
+        /// <param name="viewModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Constants.RegisteredUsers)]
@@ -100,16 +113,22 @@ namespace MyBlog.Controllers
             return View(viewModel);
         }
 
+        /// <summary>
+        /// Creates a new post
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize(Roles = Constants.HeadAdminOrPostAdmin)]
         public IActionResult Create()
         {
             return View();
         }
-
-        // POST: Posts/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
+        /// <summary>
+        /// Create a new post
+        /// </summary>
+        /// <param name="post"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Constants.HeadAdminOrPostAdmin)]
@@ -127,6 +146,11 @@ namespace MyBlog.Controllers
             return View(post);
         }
 
+        /// <summary>
+        /// Edit a post
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize(Roles = Constants.HeadAdminOrPostAdmin)]
         public async Task<IActionResult> Edit(int? id)
@@ -154,6 +178,12 @@ namespace MyBlog.Controllers
             return View(post);
         }
 
+        /// <summary>
+        /// Edit a specific post
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="post"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Constants.HeadAdminOrPostAdmin)]
@@ -187,6 +217,11 @@ namespace MyBlog.Controllers
             return View(post);
         }
 
+        /// <summary>
+        /// Delete a specific post
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize(Roles = Constants.HeadAdminOrPostAdmin)]
         public async Task<IActionResult> Delete(int? id)
@@ -214,7 +249,7 @@ namespace MyBlog.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Delete a specific post
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -240,7 +275,7 @@ namespace MyBlog.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Construct a view model containing a post and its comments
         /// </summary>
         /// <param name="post"></param>
         /// <returns></returns>

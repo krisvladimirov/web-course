@@ -20,7 +20,6 @@ namespace MyBlog.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IAuthorizationService _authorizationService;
-        private readonly RoleManager<IdentityRole> _roleManager;
 
         public AdminController(ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
