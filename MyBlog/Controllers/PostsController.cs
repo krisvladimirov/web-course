@@ -16,6 +16,7 @@ using MyBlog.Data.Seeds;
 namespace MyBlog.Controllers
 {
     [Authorize]
+    [AutoValidateAntiforgeryToken]
     public class PostsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -76,7 +77,6 @@ namespace MyBlog.Controllers
         /// <param name="viewModel"></param>
         /// <returns></returns>
         [HttpPost]
-        [ValidateAntiForgeryToken]
         [Authorize(Roles = Constants.RegisteredUsers)]
         public async Task<IActionResult> Details([Bind("PostId, CommentValue")] PostDetailsViewModel viewModel)
         {
@@ -185,7 +185,6 @@ namespace MyBlog.Controllers
         /// <param name="post"></param>
         /// <returns></returns>
         [HttpPost]
-        [ValidateAntiForgeryToken]
         [Authorize(Roles = Constants.HeadAdminOrPostAdmin)]
         public async Task<IActionResult> Edit(int id, [Bind("Id,PostValue,Title")] Post post)
         {
@@ -254,7 +253,6 @@ namespace MyBlog.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         [Authorize(Roles = Constants.HeadAdminOrPostAdmin)]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

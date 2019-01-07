@@ -14,6 +14,7 @@ using MyBlog.Models.AccountViewModels;
 namespace MyBlog.Controllers
 {
     [Authorize]
+    [AutoValidateAntiforgeryToken]
     public class AdminController : Controller
     {
 
@@ -85,7 +86,6 @@ namespace MyBlog.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryTokenAttribute]
         [Authorize(Roles = Constants.HeadAdmin)]
         public async Task<IActionResult> Edit(string id, [Bind("UserId, NewRole")] AccountViewModel model)
         {
@@ -146,7 +146,6 @@ namespace MyBlog.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         [Authorize(Roles = Constants.HeadAdmin)]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
@@ -188,7 +187,7 @@ namespace MyBlog.Controllers
                     {
                         result = await _userManager.DeleteAsync(user);
                         if (result == IdentityResult.Success)
-                            transaction.Commit(); //only commit if user and all his logins/roles have been deleted  
+                            transaction.Commit();
                     }
                 }
 
