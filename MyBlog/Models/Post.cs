@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyBlog.Models.ErrorMessages;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,14 +12,14 @@ namespace MyBlog.Models
         [ScaffoldColumn(false)]
         public int Id { get; set; }
 
-        [Required]
-        [StringLength(80)]
-        [Display(Name = "Title")]
+        [TitleRequired]
+        [StringLength(100, ErrorMessage = "That is a pretty big title there, mind shortening it?")]
+        [Display(Name = "Give it a title")]
         public string Title { get; set; }
 
-        [Required]
-        [StringLength(4000)]
-        [Display(Name = "The post's content")]
+        [ContentRequired]
+        [StringLength(4000, MinimumLength = 100, ErrorMessage = "We all know you can do better, put at least 100 words")]
+        [Display(Name = "The story")]
         public string PostValue { get; set; }
 
         [Display(Name = "Posted on")]
