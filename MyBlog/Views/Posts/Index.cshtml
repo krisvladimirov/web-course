@@ -1,42 +1,49 @@
 ﻿@model IEnumerable<MyBlog.Models.Post>
+@using Microsoft.AspNetCore.Authorization
+@using MyBlog.Data.Seeds
+@inject IAuthorizationService AuthorizationService
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<div class="container">
+    <div class="row row-offcanvas row-offcanvas-right">
+        <div class="col-xs-12 col-sm-9">
+            <div class="jumbotron">
+                <h1>Read it, Comment on it, Repeat</h1>
+                <p>In this section you can explore from a variety of post from different people and comment on their article.</p>
+                <hr />
+                @if (User.Identity.IsAuthenticated)
+                {
+                    if (User.IsInRole(Constants.HeadAdmin) || User.IsInRole(Constants.PostAdmin))
+                    {
+                        <p>If you are feeling creative today, click to create a new post! <br /> <a asp-action="Create">Create New</a></p>
+                    }
+                }
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.Title)</th>
-            <th>@Html.DisplayNameFor(model => model.PostValue)</th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PostValue)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Owner.UserName)
-            </td>
-            <td>
-                @Html.ValueFor(modelItem => item.CreationDate, "{0:g}")
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+            </div>
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-xs-6 col-lg-4">
+                        <h2>@Html.DisplayFor(modelItem => item.Title)</h2>
+                        <p>@Html.DisplayFor(modelItem => item.PostValue)</p>
+                        <p>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                                if (User.IsInRole(Constants.HeadAdmin) || User.IsInRole(Constants.PostAdmin))
+                                {
+
+                                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                }
+                            }
+                        </p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
