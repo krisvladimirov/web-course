@@ -14,15 +14,29 @@ namespace MyBlog.Data.Seeds
         {
             await CreateRoles(service);
 
-            string adminId = await CreateUsers(service, "admin@email.com", "Password123!");
+            string adminId = await CreateUsers(service, "Admin@email.com", "Password123!");
             await LinkUserToRole(service, adminId, Constants.HeadAdmin);
 
-            string postAdmiOneId = await CreateUsers(service, "member1@email.com", "Password123!");
+            string postAdmiOneId = await CreateUsers(service, "Member1@email.com", "Password123!");
             await LinkUserToRole(service, postAdmiOneId, Constants.PostAdmin);
 
-            string postAdminTwoId = await CreateUsers(service, "member2@email.com", "Password123!");
+            string postAdminTwoId = await CreateUsers(service, "Member2@email.com", "Password123!");
             await LinkUserToRole(service, postAdminTwoId, Constants.PostAdmin);
 
+            string customerOneId = await CreateUsers(service, "Customer1@email.com", "Password123!");
+            await LinkUserToRole(service, customerOneId, Constants.User);
+
+            string customerTwoId = await CreateUsers(service, "Customer2@email.com", "Password123!");
+            await LinkUserToRole(service, customerTwoId, Constants.User);
+
+            string customerThreeId = await CreateUsers(service, "Customer3@email.com", "Password123!");
+            await LinkUserToRole(service, customerThreeId, Constants.User);
+
+            string customerFourId = await CreateUsers(service, "Customer4@email.com", "Password123!");
+            await LinkUserToRole(service, customerFourId, Constants.User);
+
+            string customerFiveId = await CreateUsers(service, "Customer5@email.com", "Password123!");
+            await LinkUserToRole(service, customerFiveId, Constants.User);
 
             //await CreateUsers(service);
             //RoleManager<IdentityRole> roleManager = service

@@ -20,6 +20,7 @@ namespace MyBlog.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IAuthorizationService _authorizationService;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public AdminController(ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
@@ -73,15 +74,57 @@ namespace MyBlog.Controllers
                 return NotFound();
             }
 
-            return View();
+            AccountViewModel model = new AccountViewModel
+            {
+                UserId = user.Id,
+                UserName = user.UserName,
+                Email = user.Email,
+                Roles = await _userManager.GetRolesAsync(user)
+            };
+
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryTokenAttribute]
         [Authorize(Roles = Constants.HeadAdmin)]
-        public async Task<IActionResult> Edit(string id, [Bind("")] AccountViewModel model)
+        public async Task<IActionResult> Edit(string id, [Bind("UserId, NewRole")] AccountViewModel model)
         {
-            return View();
+            IdentityResult result = IdentityResult.Success;
+
+            if (id != model.UserId)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                if (model.NewRole == Constants.PostAdmin || model.NewRole == Constants.User)
+                {
+                    var user = await _userManager.FindByIdAsync(model.UserId);
+                    var rolesForUser = await _userManager.GetRolesAsync(user);
+
+
+                    if (user != null)
+                    {
+                        // Remove old role and any additional if present
+                        foreach (var item in rolesForUser)
+                        {
+                            result = await _userManager.RemoveFromRoleAsync(user, item);
+                            if (result != IdentityResult.Success)
+                                break;
+                        }
+
+                        // Assign new role
+                        await _userManager.AddToRoleAsync(user, model.NewRole);
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+                }
+            }
+
+            return RedirectToAction("Index", "Admin");
         }
 
         [HttpGet]

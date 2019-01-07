@@ -1,0 +1,69 @@
+﻿@model MyBlog.Models.AccountViewModels.AccountViewModel
+@using MyBlog.Data.Seeds
+@{
+    ViewData["Title"] = "Edit";
+}
+<h2>Edit</h2>
+<h4>Post</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="UserId" />
+            @if (Model.Roles[0] == (Constants.User))
+            {
+                <p><b>Do you want to grant this user the rights to post content?</b></p>
+                <p><b>If changed, the user will be able to post content on this website!</b></p>
+                <div style="display:none" class="form-control">
+                    <input type="hidden" asp-for="NewRole" class="form-control" value="@Constants.PostAdmin" />
+                    <span asp-validation-for="NewRole" class="text-danger"></span>
+                </div>
+            }
+            else if (Model.Roles[0] == (Constants.PostAdmin))
+            {
+
+                <p><b>Do you want to restrict this user's rights from posting content?</b></p>
+                <p><b>If changed, the user will not be able to post content on this website!</b></p>
+                <div style="display:none" form-control">
+                    <input type="hidden" asp-for="NewRole" class="form-control" value="@Constants.User" />
+                    <span asp-validation-for="NewRole" class="text-danger"></span>
+                </div>
+            }
+
+            <div class="form-group">
+                <input type="submit" value="Yes" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@*<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PostValue" class="control-label"></label>
+                <input asp-for="PostValue" class="form-control" />
+                <span asp-validation-for="PostValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>*@
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
