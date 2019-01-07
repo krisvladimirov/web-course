@@ -7,47 +7,59 @@
     ViewData["Title"] = "Index";
 }
 
+<div class="jumbotron">
+    <div class="container">
+        <h1>Read it, Comment on it, Repeat</h1>
+        <p>In this section you can explore from a variety of posts by different people and comment on their work.</p>
+        @if (User.Identity.IsAuthenticated)
+        {
+            if (User.IsInRole(Constants.HeadAdmin) || User.IsInRole(Constants.PostAdmin))
+            {
+                <p>If you are feeling creative today, click the button bellow to create something worth sharing! <br /><br /> <a asp-action="Create" class="btn btn-primary btn-lg">Create New</a></p>
+            }
+        }
+    </div>
+</div>
 <div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4">
+                <h2>@Html.DisplayFor(modelItem => item.Title)</h2>
+                <hr />
+                <p>
+                    By @Html.DisplayFor(modelItem => item.Owner.UserName) <br />
+                    @Html.DisplayFor(modelItem => item.CreationDate)
+                </p>
+                <hr />
+                <p>@Html.DisplayFor(modelItem => item.PostValue)</p>
+                <p>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-lg">Details</a>
+                        if (User.IsInRole(Constants.HeadAdmin) || User.IsInRole(Constants.PostAdmin))
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-lg">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-primary btn-lg">Delete</a>
+                        }
+                    }
+                </p>
+            </div>
+        }
+    </div>
+</div>
+
+
+@*<div class="container">
     <div class="row row-offcanvas row-offcanvas-right">
         <div class="col-xs-12 col-sm-9">
             <div class="jumbotron">
-                <h1>Read it, Comment on it, Repeat</h1>
-                <p>In this section you can explore from a variety of posts by different people and comment on their work.</p>
-                <hr />
-                @if (User.Identity.IsAuthenticated)
-                {
-                    if (User.IsInRole(Constants.HeadAdmin) || User.IsInRole(Constants.PostAdmin))
-                    {
-                        <p>If you are feeling creative today, click to create the bellow button to create something worth sharing! <br /> <a asp-action="Create">Create New</a></p>
-                    }
-                }
+                
 
             </div>
             <div class="row">
-                @foreach (var item in Model)
-                {
-                    <div class="col-xs-6 col-lg-4">
-                        <h2>@Html.DisplayFor(modelItem => item.Title)</h2>
-                        <hr />
-                        <p>By @Html.DisplayFor(modelItem => item.Owner.UserName) <br />
-                            @Html.DisplayFor(modelItem => item.CreationDate)
-                        </p>
-                        <hr />
-                        <p>@Html.DisplayFor(modelItem => item.PostValue)</p>
-                        <p>
-                            @if (User.Identity.IsAuthenticated)
-                            {
-                                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                                if (User.IsInRole(Constants.HeadAdmin) || User.IsInRole(Constants.PostAdmin))
-                                {
-                                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                                }
-                            }
-                        </p>
-                    </div>
-                }
+               
             </div>
         </div>
     </div>
-</div>
+</div>*@
