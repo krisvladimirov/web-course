@@ -14,19 +14,20 @@ namespace MyBlog.Controllers
     {
         public IActionResult Index()
         {
+            ViewData["Message"] = "Welcome";
             return View();
         }
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "";
 
             return View();
         }
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["Message"] = "If you feel eager to get in touch with me, I doubt though.";
 
             return View();
         }
