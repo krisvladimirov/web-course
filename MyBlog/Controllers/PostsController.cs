@@ -283,7 +283,7 @@ namespace MyBlog.Controllers
 
             viewModel.Post = post;
 
-            List<Comment> comments = await _context.Comments
+            List<Comment> comments = await _context.Comments.Include(c => c.Owner)
                 .Where(m => m.BelongingPost == post).ToListAsync();
 
             viewModel.Comments = comments;
