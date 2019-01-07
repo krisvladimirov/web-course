@@ -18,7 +18,7 @@
                 {
                     if (User.IsInRole(Constants.HeadAdmin) || User.IsInRole(Constants.PostAdmin))
                     {
-                        <p>If you are feeling creative today, click to create a new post! <br /> <a asp-action="Create">Create New</a></p>
+                        <p>If you are feeling creative today, click to create the bellow button to create something worth sharing! <br /> <a asp-action="Create">Create New</a></p>
                     }
                 }
 
@@ -40,7 +40,6 @@
                                 <a asp-action="Details" asp-route-id="@item.Id">Details</a>
                                 if (User.IsInRole(Constants.HeadAdmin) || User.IsInRole(Constants.PostAdmin))
                                 {
-
                                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                                     <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                                 }
