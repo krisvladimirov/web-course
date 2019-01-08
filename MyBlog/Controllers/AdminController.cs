@@ -44,15 +44,23 @@ namespace MyBlog.Controllers
 
             foreach (var usr in allUsers)
             {
-                var model = new AccountViewModel
+                var roles = await _userManager.GetRolesAsync(usr);
+                AccountViewModel model = new AccountViewModel();
+                if (roles[0] != Constants.HeadAdmin)
                 {
-                    UserId = usr.Id,
-                    Email = usr.Email,
-                    UserName = usr.UserName,
-                    Roles = await _userManager.GetRolesAsync(usr)
-                };
-
-                AllUsersAndRoles.Add(model);
+                    model.UserId = usr.Id;
+                    model.Email = usr.Email;
+                    model.UserName = usr.UserName;
+                    model.Roles = roles;
+                    //var model = new AccountViewModel
+                    //{
+                    //    UserId = usr.Id,
+                    //    Email = usr.Email,
+                    //    UserName = usr.UserName,
+                    //    Roles = await _userManager.GetRolesAsync(usr)
+                    //};
+                    AllUsersAndRoles.Add(model);
+                }
             }
 
             UserAndRoleViewModel.UserAndRole = AllUsersAndRoles;

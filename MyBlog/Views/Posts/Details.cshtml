@@ -8,7 +8,8 @@
         <div class="col-sm-8">
             <h2 class="blog-post-title">@Html.DisplayFor(model => model.Post.Title)</h2>
             <p class="blog-post-meta">
-                @Html.DisplayFor(model => model.Post.CreationDate), by @Html.DisplayFor(model => model.Post.Owner.UserName)
+                By <b>@Html.DisplayFor(model => model.Post.Owner.UserName)</b>,
+                @Html.DisplayFor(model => model.Post.CreationDate)
             </p>
             <p class="blog-post-content">@Html.DisplayFor(model => model.Post.PostValue)</p>
         </div>
@@ -17,7 +18,7 @@
     <div id="comments" class="comments">
         <div class="row">
             <div id="respond" class="col-md-4">
-                <h4>Join conversation?</h4>
+                <h4>Join the conversation?</h4>
                 <form asp-action="Details">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="PostId" value="@Model.Post.Id" />
@@ -33,15 +34,16 @@
             </div>
         </div>
     </div>
-    <hr />
     <div>
         <div class="row">
             <div class="dl-horizontal">
                 @foreach (Comment comment in Model.Comments)
                 {
-                <p>@Html.DisplayFor(model => comment.Owner.UserName), @Html.DisplayFor(model => comment.CreationDate)</p>
+                    <hr />
+                    <p style="color:#105ab2;font-weight:bold">@Html.DisplayFor(model => comment.Owner.UserName),<br /> @Html.DisplayFor(model => comment.CreationDate)</p>
                     <p>@Html.DisplayFor(model => comment.CommentValue)</p>
                 }
+
             </div>
         </div>
     </div>

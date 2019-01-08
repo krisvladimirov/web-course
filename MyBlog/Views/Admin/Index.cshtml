@@ -1,4 +1,5 @@
 ﻿@model MyBlog.Models.AccountViewModels.UsersAndRolesViewModel
+@using MyBlog.Data.Seeds
 @{
     ViewData["Title"] = "Admin page";
 }
@@ -15,7 +16,7 @@
             <thead>
                 <tr>
                     <td><b>Username</b></td>
-                    <td><b>Roles</b></td>
+                    <td><b>Role</b></td>
                 </tr>
             </thead>
 
@@ -30,8 +31,16 @@
                         }
                     </td>
                     <td><a asp-action="Delete" asp-route-id="@item.UserId">Delete User</a></td>
-                    <td><a asp-action="Edit" asp-route-id="@item.UserId">Edit</a></td>
-                    <td><a></a>User details</td>
+                    <td>
+                        @if (item.Roles[0] == Constants.PostAdmin)
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.UserId">Demote to "User"</a>
+                        }
+                        else if (item.Roles[0] == Constants.User)
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.UserId">Promote to "Post admin"</a>
+                        }
+                    </td>
                 </tr>
             }
         </table>
