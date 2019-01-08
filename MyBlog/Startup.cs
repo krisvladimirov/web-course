@@ -78,6 +78,12 @@ namespace MyBlog
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            var cookiePolicyOptions = new CookiePolicyOptions
+            {
+                HttpOnly = Microsoft.AspNetCore.CookiePolicy.HttpOnlyPolicy.Always,
+                Secure = Microsoft.AspNetCore.Http.CookieSecurePolicy.Always
+            };
+            app.UseCookiePolicy(cookiePolicyOptions);
         }
     }
 }
